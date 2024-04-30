@@ -101,7 +101,7 @@ function Body({ setValue, level }: Prop) {
             key={i}
             className={
               i === 3
-                ? `font-bold text-2xl h-16 px-2 rounded-md border-b-[4px] ${bgUniq} ${borderUniq} `
+                ? `font-bold text-2xl h-16 px-2 rounded-md border-b-[4px] ${bgUniq} ${borderUniq} text-theme1-textScreen`
                 : ""
             }
             onClick={() => handleButtonClick(btn)}
@@ -115,7 +115,7 @@ function Body({ setValue, level }: Prop) {
         <Button
           type="unique"
           size="big"
-          className={`${bgUniq} ${borderUniq} h-16 rounded-md uppercase text-2xl  font-extrabold`}
+          className={`${bgUniq} ${borderUniq} h-16 rounded-md uppercase text-2xl text-theme1-textScreen  font-extrabold`}
           onClick={handleReset} // Reset expression
         >
           reset
