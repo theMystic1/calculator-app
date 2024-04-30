@@ -31,6 +31,13 @@ function Button({
       ? "text-theme2-text"
       : "text-theme3-text";
 
+  const border =
+    level === 1
+      ? "border-theme1-themeBtnShadow`"
+      : level === 2
+      ? "border-theme2-themeBtnShadow`"
+      : "border-theme3-themeBtnShadow`";
+
   if (type === "unique")
     return (
       <button className={className} onClick={onClick}>
@@ -43,7 +50,7 @@ function Button({
 
   return (
     <button
-      className={`${bgTg} ${text} font-bold sm:text-2xl text-xl sm:h-16 h-10 rounded-md border-b-[4px] border-theme${level}-themeBtnShadow`}
+      className={`${bgTg} ${text} font-bold sm:text-2xl text-xl sm:h-16 h-10 rounded-md border-b-[4px] ${border}`}
       onClick={onClick}
     >
       {children}
