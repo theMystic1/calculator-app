@@ -43,7 +43,7 @@ function Button({
 
   return (
     <button
-      className={`${bgTg} ${text} font-bold text-2xl h-16 rounded-md border-b-[4px] border-theme${level}-themeBtnShadow`}
+      className={`${bgTg} ${text} font-bold sm:text-2xl text-xl sm:h-16 h-10 rounded-md border-b-[4px] border-theme${level}-themeBtnShadow`}
       onClick={onClick}
     >
       {children}

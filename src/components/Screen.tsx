@@ -24,7 +24,7 @@ function Screen({ value, setValue, level }: Props) {
 
   return (
     <input
-      className={`h-24 bg-theme${level}-themeScreenBackground w-full rounded-md my-10 border-0 outline-0 text-right text-2xl p-4 font-extrabold text-theme${level}-textScreen ${extraPadding}`}
+      className={`sm:h-24 h-16 bg-theme${level}-themeScreenBackground w-full rounded-md my-10 border-0 outline-0 text-right text-2xl p-4 font-extrabold text-theme${level}-textScreen ${extraPadding}`}
       value={value}
       onChange={handleInputChange}
       ref={inputRef}
