@@ -4,6 +4,27 @@ interface levelProps {
 }
 
 function Header({ level, setLevel }: levelProps) {
+  const bgScreen =
+    level === 1
+      ? "bg-theme1-themeScreenBackground"
+      : level === 2
+      ? "bg-theme2-themeScreenBackground"
+      : "bg-theme3-themeScreenBackground";
+
+  const bgTg =
+    level === 1
+      ? "bg-theme1-themeToggleEqH"
+      : level === 2
+      ? "bg-theme2-themeToggleEqH"
+      : "bg-theme3-themeToggleEqH";
+
+  const text =
+    level === 1
+      ? "text-theme1-textScreen"
+      : level === 2
+      ? "text-theme2-textScreen"
+      : "text-theme3-textScreen";
+
   const minLevel: number = 1;
   const maxLevel: number = 3;
 
@@ -17,9 +38,7 @@ function Header({ level, setLevel }: levelProps) {
     }
   }
   return (
-    <header
-      className={`w-full flex justify-between items-center text-theme${level}-textScreen`}
-    >
+    <header className={`w-full flex justify-between items-center ${text}`}>
       <h1 className="font-extrabold text-2xl">calc</h1>
 
       <div className="flex gap-8 items-center ">
@@ -32,10 +51,10 @@ function Header({ level, setLevel }: levelProps) {
             <span>1</span> <span>2</span> <span>3</span>
           </div>
           <div
-            className={`w-full h-5 rounded-2xl bg-theme${level}-themeScreenBackground flex items-center p-1`}
+            className={`w-full h-5 rounded-2xl ${bgScreen} flex items-center p-1`}
           >
             <div
-              className={`rounded-full bg-theme${level}-themeToggleEqH h-3 w-3 absolute ${
+              className={`rounded-full ${bgTg} h-3 w-3 absolute ${
                 level === 1
                   ? "translate-x-0"
                   : level === 2

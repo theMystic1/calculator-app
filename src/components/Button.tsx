@@ -17,6 +17,20 @@ function Button({
   onClick,
   level,
 }: ListProps) {
+  const bgTg =
+    level === 1
+      ? "bg-theme1-themeBtn"
+      : level === 2
+      ? "bg-theme2-themeBtn"
+      : "bg-theme3-themeBtn";
+
+  const text =
+    level === 1
+      ? "text-theme1-text"
+      : level === 2
+      ? "text-theme2-text"
+      : "text-theme3-text";
+
   if (type === "unique")
     return (
       <button className={className} onClick={onClick}>
@@ -29,7 +43,7 @@ function Button({
 
   return (
     <button
-      className={`bg-theme${level}-themeBtn text-theme${level}-text font-bold text-2xl h-16 rounded-md border-b-[4px] border-theme${level}-themeBtnShadow`}
+      className={`${bgTg} ${text} font-bold text-2xl h-16 rounded-md border-b-[4px] border-theme${level}-themeBtnShadow`}
       onClick={onClick}
     >
       {children}

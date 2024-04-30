@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Button from "./Button";
+import { all, create } from "mathjs";
+// import { math } from "mathjs"; // Import math.js
 
 interface Btn {
   [index: string]: (string | number)[];
@@ -14,8 +16,10 @@ function Body({ setValue, level }: Prop) {
   const [expression, setExpression] = useState("");
 
   const btns: Btn = {
-    item: [7, 8, 9, "Del", 4, 5, 6, "+", 1, 2, 3, "-", ".", 0, "/", "x"],
+    item: [7, 8, 9, "Del", 4, 5, 6, "+", 1, 2, 3, "-", ".", 0, "/", "*"],
   };
+
+  // const config;
 
   const handleButtonClick = (value: string | number) => {
     if (value === "Del") {
@@ -33,11 +37,63 @@ function Body({ setValue, level }: Prop) {
     setValue("");
   }
 
+  const config = {};
+  const math = create(all, config);
+
+  const computeExpression = useCallback(() => {
+    if (!expression) return;
+    try {
+      const result = math.evaluate(expression);
+      setExpression(String(result));
+      // setValue(() => String(result)); // Use callback form of setState
+    } catch (error) {
+      setExpression("Invalid math expression");
+      setValue("Invalid math expression");
+    }
+  }, [expression, math, setValue]);
+
+  // setValue(expression);
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        computeExpression();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+    setValue(expression);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [computeExpression, expression, setValue]);
+
+  console.log();
+
+  const bg =
+    level === 1
+      ? "bg-theme1-themeToggleKeypadBackground"
+      : level === 2
+      ? "bg-theme2-themeToggleKeypadBackground"
+      : "bg-theme3-themeToggleKeypadBackground";
+
+  const bgUniq =
+    level === 1
+      ? "bg-theme1-themeKeyBackground"
+      : level === 2
+      ? "bg-theme2-themeKeyBackground"
+      : "bg-theme3-themeKeyBackground";
+
+  const borderUniq =
+    level === 1
+      ? "border-theme1-themeKeyShadow"
+      : level === 2
+      ? "border-theme2-themeKeyShadow"
+      : "border-theme3-themeKeyShadow";
   return (
-    <div
-      className={`bg-theme${level}-themeToggleKeypadBackground w-full p-8 rounded-md`}
-    >
-      <div className="grid grid-cols-4 gap-8">
+    <div className={`${bg} w-full p-8 rounded-md`}>
+      <div className="grid grid-cols-4 gap-2 sm:gap-8">
         {btns.item.map((btn: string | number, i: number) => (
           <Button
             type={i === 3 ? "unique" : ""}
@@ -45,7 +101,7 @@ function Body({ setValue, level }: Prop) {
             key={i}
             className={
               i === 3
-                ? "font-bold text-2xl h-16 rounded-md border-b-[4px] bg-theme1-themeKeyBackground border-theme1-themeKeyShadow"
+                ? `font-bold text-2xl h-16 px-2 rounded-md border-b-[4px] ${bgUniq} ${borderUniq} `
                 : ""
             }
             onClick={() => handleButtonClick(btn)}
@@ -55,11 +111,11 @@ function Body({ setValue, level }: Prop) {
           </Button>
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-8 mt-8">
+      <div className="grid grid-cols-2 gap-2 sm:gap-8 mt-8">
         <Button
           type="unique"
           size="big"
-          className="bg-theme1-themeKeyBackground border-theme1-themeKeyShadow h-16 rounded-md uppercase text-2xl  font-extrabold"
+          className={`${bgUniq} ${borderUniq} h-16 rounded-md uppercase text-2xl  font-extrabold`}
           onClick={handleReset} // Reset expression
         >
           reset
@@ -68,7 +124,7 @@ function Body({ setValue, level }: Prop) {
           type="unique"
           size="big"
           className={`bg-theme${level}-themeToggleEqH h-16 rounded-md uppercase text-2xl  font-extrabold`}
-          onClick={() => setValue(expression)} // Set expression value
+          onClick={computeExpression} // Set expression value
         >
           =
         </Button>
